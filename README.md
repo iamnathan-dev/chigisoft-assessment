@@ -88,6 +88,6 @@ For detailed deployment configuration, refer to the [Next.js deployment document
 - Core Web Vitals tracking
 - Error tracking and logging
 
-## Contributing
+<!-- ## Contributing
 
-Please read our CONTRIBUTING.md file for guidelines on code style, branch naming conventions, and the pull request process.
+Please read our CONTRIBUTING.md file for guidelines on code style, branch naming conventions, and the pull request process. -->
