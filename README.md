@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a sophisticated [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), implementing modern web development practices and architectural patterns.
 
 ## Getting Started
 
-First, run the development server:
+To begin development, ensure you have Node.js (v18.17.0 or higher) and pnpm installed. Then, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start development server with hot-reload
 pnpm dev
-# or
-bun dev
+
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
+
+# Run tests
+pnpm test
+
+# Run linting
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000). The development server includes features like Fast Refresh for instantaneous feedback during development.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application follows a feature-based architecture with the main entry point at `src/app/(shop)/home/page.tsx`. This structure implements the new Next.js 13+ App Router pattern, providing better organization and scalability. The page components support automatic updates through React Server Components and client-side modifications.
 
-## Learn More
+## Technical Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: Next.js 13+ with App Router
+- **Language**: TypeScript for type safety
+- **Styling**: Tailwind CSS with custom configuration
+- **Font System**: Implements [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) with [Geist](https://vercel.com/font), providing optimal font loading and performance
+- **State Management**: React Context API with custom hooks
+- **Testing**: Jest and React Testing Library
+- **Linting**: ESLint with custom rule set
+- **Formatting**: Prettier for consistent code style
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Advanced Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Server-side Rendering (SSR) for optimal performance
+- Static Site Generation (SSG) where applicable
+- API Routes for backend functionality
+- Image optimization with next/image
+- Middleware support for authentication and routing
+- Environment variable management
+- Security headers configuration
 
-## Deploy on Vercel
+## Development Resources
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For deeper understanding and advanced usage:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs) - Comprehensive guide to Next.js features and API
+- [Learn Next.js](https://nextjs.org/learn) - Interactive tutorial for mastering Next.js
+- [Next.js GitHub Repository](https://github.com/vercel/next.js) - Source code and contribution guidelines
+- [Next.js Discord](https://nextjs.org/discord) - Community support and discussions
+
+## Deployment
+
+### Production Deployment with Vercel
+
+The recommended deployment platform is [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), offering:
+
+- Automatic HTTPS/SSL
+- Edge Functions support
+- Automatic CI/CD pipeline
+- Preview deployments for pull requests
+- Analytics and monitoring
+- Serverless Functions
+
+For detailed deployment configuration, refer to the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
+
+### Alternative Deployment Options
+
+- Docker containerization
+- Self-hosted solutions
+- Cloud providers (AWS, GCP, Azure)
+
+## Performance Monitoring
+
+- Vercel Analytics for real-user metrics
+- Lighthouse scores monitoring
+- Core Web Vitals tracking
+- Error tracking and logging
+
+## Contributing
+
+Please read our CONTRIBUTING.md file for guidelines on code style, branch naming conventions, and the pull request process.
