@@ -7,8 +7,8 @@ export default function ShopLayout({
 }) {
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 lg:ml-[350px] ml-0 p-3">{children}</main>
+      <Sidebar></Sidebar>
+      <main className="flex-1 lg:ml-[350px] ml-0 p-3 mt-20">{children}</main>
     </div>
   );
 }
