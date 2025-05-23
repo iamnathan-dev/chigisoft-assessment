@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useSidebar } from "@/context/sidebarContext";
 
 interface PriceOption {
   value: string;
@@ -65,6 +66,8 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const { toggleSidebar } = useSidebar();
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white shadow-xl shadow-black/3 z-50">
       <nav
@@ -86,7 +89,7 @@ export default function Navbar() {
             variant={"secondary"}
             size={"icon"}
             className="text-gray-700 rounded-full relative shadow-none focus:ring-0 focus-visible:ring-0 cursor-pointer"
-            onClick={() => {}}
+            onClick={toggleSidebar}
           >
             <span className="sr-only">Open main menu</span>
             <Menu strokeWidth={1} />

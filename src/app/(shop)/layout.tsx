@@ -95,7 +95,7 @@ export default function ShopLayout({
           </div>
         </div>
       </Sidebar>{" "}
-      <main className="flex-1 lg:ml-[350px] ml-0 lg:p-5 p-3 mt-20">
+      <main className="flex-1 lg:ml-[350px] ml-0 lg:p-5 p-3 bg-gray-50 mt-20">
         {children}
       </main>
     </div>
