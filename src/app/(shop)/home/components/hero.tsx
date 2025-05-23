@@ -9,8 +9,8 @@ const Hero = () => {
   return (
     <section className="md:h-96 h-fit rounded-lg bg-[rgb(26,111,176)]">
       <div className="flex md:flex-row flex-col itmes-center justify-between h-full md:px-0 px-8 md:pt-0 pt-15">
-        <div className="basis-full md:basis-1/2 flex flex-col items-start justify-center md:pl-15 text-white">
-          <h1 className="md:text-4xl text-2xl font-bold">
+        <div className="basis-full md:basis-1/2 flex flex-col items-start justify-center xl:pl-15 md:pl-10 text-white">
+          <h1 className="xl:text-4xl md:text-3xl text-2xl font-bold">
             24/7 Dilivery Service
           </h1>
           <p className="text-base mt-4">
@@ -28,9 +28,7 @@ const Hero = () => {
             >
               <Image src={ApplSVGIcon} alt="apple svg" width={25} height={25} />
               <div className="text-start">
-                <small className="!text-gray-100 font-light">
-                  Download on the
-                </small>
+                <small className="!text-gray-100 font-light">Download on</small>
                 <h4 className="!text-gray-100 font-semibold">App Store</h4>
               </div>
             </Button>
@@ -47,9 +45,7 @@ const Hero = () => {
                 height={25}
               />
               <div className="text-start">
-                <small className="!text-gray-100 font-light">
-                  Download on the
-                </small>
+                <small className="!text-gray-100 font-light">Download on</small>
                 <h4 className="!text-gray-100 font-semibold">Google Play</h4>
               </div>
             </Button>
@@ -57,7 +53,7 @@ const Hero = () => {
         </div>
 
         <div className="basis-1/2 md:mt-0 mt-10">
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="xl:w-full md:w-[80%] w-full xl:ml-0 md:ml-10 ml-0 h-full flex items-center justify-center">
             <Image
               src={HeroImge}
               alt="Hero Image"

@@ -156,32 +156,15 @@ export default function Navbar() {
             )
           )}
         </div>
-        <PopoverGroup className="hidden lg:block w-[800px]">
+        <PopoverGroup className="hidden lg:block w-[500px] xl:w-[800px]">
           <div className="flex flex-row w-full border rounded-sm">
             <div className="flex flex-row items-center gap-2 py-1 px-2">
               <Search strokeWidth={1} />
               <Input
                 type="text"
-                placeholder="Search for products"
-                className="w-[600px] shadow-none border-0 focus:ring-0 focus-visible:ring-0 p-0"
+                placeholder="Search by title or category..."
+                className="xl:w-[600px] w-[300px] shadow-none border-0 focus:ring-0 focus-visible:ring-0 p-0"
               />
-            </div>
-            <div className="border-l flex flex-row items-center">
-              <Select>
-                <SelectTrigger className="border-0 rounded-none cursor-pointer shadow-none focus:ring-0 focus-visible:ring-0">
-                  <SelectValue placeholder="Filter by price" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Prices</SelectLabel>
-                    {priceOPtions.map(({ value, label }) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}{" "}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </div>
           </div>
         </PopoverGroup>
