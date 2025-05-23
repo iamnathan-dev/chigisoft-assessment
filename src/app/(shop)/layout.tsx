@@ -10,8 +10,6 @@ import {
   Youtube,
 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import SalesAd from "@/shared/assets/images/ad.png";
 
 export default function ShopLayout({
   children,
@@ -80,18 +78,6 @@ export default function ShopLayout({
                 </Link>
               </Button>
             ))}
-          </div>
-
-          <div className="mt-5 mb-15">
-            <div className="relative w-full h-[300px] border shadow-sm rounded-lg overflow-hidden">
-              <Image
-                src={SalesAd}
-                alt="Special Offer"
-                fill
-                sizes="100%"
-                className="object-cover w-full h-full"
-              />
-            </div>{" "}
           </div>
         </div>
       </Sidebar>{" "}
