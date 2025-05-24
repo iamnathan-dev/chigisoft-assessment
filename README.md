@@ -28,13 +28,32 @@ The application will be available at [http://localhost:3000](http://localhost:30
 
 ## Project Structure
 
-The application follows a feature-based architecture with the main entry point at `src/app/(shop)/home/page.tsx`. This structure implements the new Next.js 13+ App Router pattern, providing better organization and scalability. The page components support automatic updates through React Server Components and client-side modifications.
+The project follows a modular architecture with the following structure:
+
+```
+src/
+├── app/                   # App Router pages and layouts
+│   ├── (auth)/           # Authentication related routes
+│   └── (shop)/           # Main shop application routes
+├── components/           # Reusable UI components
+│   ├── common/          # Shared components
+│   └── ui/              # Basic UI elements
+├── config/              # Application configuration
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility functions and libraries
+├── providers/           # React context providers
+├── services/           # External service integrations
+├── store/              # State management
+├── styles/             # Global styles and Tailwind config
+└── types/              # TypeScript type definitions
+```
 
 ## Technical Stack
 
 - **Framework**: Next.js 13+ with App Router
 - **Language**: TypeScript for type safety
 - **Styling**: Tailwind CSS with custom configuration
+- **Icons**: Lucide React for consistent and scalable icons
 - **Font System**: Implements [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) with [Geist](https://vercel.com/font), providing optimal font loading and performance
 - **State Management**: React Context API with custom hooks
 - **Testing**: Jest and React Testing Library
