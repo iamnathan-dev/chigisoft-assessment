@@ -33,20 +33,15 @@ The project follows a modular architecture with the following structure:
 ```
 src/
 ├── app/                   # App Router pages and layouts
-│   ├── (auth)/           # Authentication related routes
+    ├── (dashboard)/      # dashboard related routes
 │   └── (shop)/           # Main shop application routes
 ├── components/           # Reusable UI components
-│   ├── common/          # Shared components
 │   └── ui/              # Basic UI elements
 ├── config/              # Application configuration
 ├── hooks/               # Custom React hooks
 ├── lib/                 # Utility functions and libraries
-├── providers/           # React context providers
-├── services/           # External service integrations
-├── store/              # State management
-├── styles/             # Global styles and Tailwind config
-└── types/              # TypeScript type definitions
-```
+├── context/           # React context api
+├── shared/           # Shared components and assets
 
 ## Technical Stack
 
@@ -110,3 +105,4 @@ For detailed deployment configuration, refer to the [Next.js deployment document
 <!-- ## Contributing
 
 Please read our CONTRIBUTING.md file for guidelines on code style, branch naming conventions, and the pull request process. -->
+```
