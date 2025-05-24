@@ -1,15 +1,14 @@
-import { Button } from "@/components/ui/button";
 import Sidebar from "@/shared/components/sidebar";
-import Link from "next/link";
 import {
   CONTACT_INFO,
   ContactInfo,
   PRICE_RANGES,
   SOCIAL_LINKS,
-  SocialLink,
   CATEGORIES,
 } from "./constant";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Footer } from "@/shared/components/footer";
+import SocialButton from "@/shared/components/social-buttons";
 
 const ContactItem = ({ Icon, label, value }: ContactInfo) => (
   <div className="flex flex-row gap-3 items-center">
@@ -19,19 +18,6 @@ const ContactItem = ({ Icon, label, value }: ContactInfo) => (
       <h4 className="text-sm text-gray-700">{value}</h4>
     </div>
   </div>
-);
-
-const SocialButton = ({ Icon, href }: SocialLink) => (
-  <Button
-    variant="secondary"
-    size="icon"
-    className="text-gray-700 rounded-full relative shadow-none hover:bg-gray-100 focus:ring-0 focus-visible:ring-0 cursor-pointer"
-    asChild
-  >
-    <Link href={href}>
-      <Icon strokeWidth={1} />
-    </Link>
-  </Button>
 );
 
 const FilterSection = ({
@@ -88,9 +74,10 @@ export default function ShopLayout({
           </div>
         </div>
       </Sidebar>
-      <main className="flex-1 xl:ml-[350px] lg:ml-[280px] ml-0 lg:p-5 p-3 bg-gray-50 mt-17">
-        {children}
-      </main>
+      <section className="xl:ml-[350px] lg:ml-[280px] ml-0">
+        <main className="flex-1 lg:p-5 p-3 bg-gray-50 mt-17">{children}</main>
+        <Footer />
+      </section>
     </div>
   );
 }

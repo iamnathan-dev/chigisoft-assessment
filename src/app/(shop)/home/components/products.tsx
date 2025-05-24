@@ -15,9 +15,9 @@ const Products = () => {
   const isEmpty = !isLoading && (!products || products.length === 0);
 
   return (
-    <section className="mx-auto py-[5rem]">
+    <section className="mx-auto pt-[5rem] pb-[3rem]">
       <div className="flex flex-row items-center justify-between pb-2 border-b">
-        <h2 className="text-gray-900 font-semibold text-2xl">All Products</h2>
+        <h2 className="text-gray-900 font-medium text-lg">All Products</h2>
         <Button
           variant="outline"
           size="lg"

@@ -4,8 +4,8 @@ import { Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
 const ProductCard = (product: Product) => {
-  const discountedPrice = (product.price * 0.978).toLocaleString();
   const originalPrice = product.price.toLocaleString();
+  const increasedPrice = (product.price * 1.022).toLocaleString();
   const ratingStars =
     "★".repeat(Math.floor(product.rating.rate)) +
     "☆".repeat(5 - Math.floor(product.rating.rate));
@@ -13,7 +13,7 @@ const ProductCard = (product: Product) => {
   return (
     <div className="relative w-full h-fit rounded-sm bg-white overflow-hidden group duration-300">
       <span className="text-xs bg-green-100 absolute top-0 left-0 m-3 z-10 text-green-600 px-2 py-1 rounded-full">
-        -2.2%
+        +2.2%
       </span>
       <div className="h-[150px] overflow-hidden flex items-center justify-center p-4">
         <Image
@@ -29,13 +29,13 @@ const ProductCard = (product: Product) => {
         <div className="inline-block px-2 p-1 bg-gray-100 rounded-full text-xs text-gray-600 mb-2">
           {product.category}
         </div>
-        <h4 className="text-sm font-medium line-clamp-2 h-10">
+        <h4 className="text-xs font-medium line-clamp-2 h-9">
           {product.title}
         </h4>
 
         <div className="flex flex-row gap-2 items-center">
           <div className="flex items-center gap-1">
-            <div className="flex items-center text-yellow-400">
+            <div className="flex items-center text-xs text-yellow-400">
               {ratingStars}
             </div>
             <span className="text-xs text-gray-500">
@@ -51,7 +51,7 @@ const ProductCard = (product: Product) => {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="text-base font-light text-indigo-600">
-              ${discountedPrice}
+              ${increasedPrice}
             </div>
             <small className="text-gray-400 line-through">
               ${originalPrice}
