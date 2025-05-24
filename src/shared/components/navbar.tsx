@@ -1,21 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PopoverGroup } from "@headlessui/react";
+import {
+  PopoverGroup,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from "@headlessui/react";
 import Image from "next/image";
 import { Heart, Menu, Search, ShoppingCart, User } from "lucide-react";
 import Logo from "@/shared/assets/images/logo.png";
 import LogoMobile from "@/shared/assets/images/logo-mb.png";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,21 +20,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useSidebar } from "@/context/sidebarContext";
-
-interface PriceOption {
-  value: string;
-  label: string;
-}
-
-const priceOPtions: PriceOption[] = [
-  { value: "0-50", label: "$0 - $50" },
-  { value: "51-100", label: "$51 - $100" },
-  { value: "101-200", label: "$101 - $200" },
-  { value: "201-500", label: "$201 - $500" },
-  { value: "500+", label: "$500+" },
-];
 
 interface IconButton {
   icon: React.FC<{ strokeWidth?: number }>;
@@ -46,10 +34,31 @@ interface IconButton {
   tooltip?: string;
 }
 
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+const cartItems: CartItem[] = [
+  {
+    id: 1,
+    name: "Product 1",
+    price: 99.99,
+    image: "/product1.jpg",
+  },
+  {
+    id: 2,
+    name: "Product 2",
+    price: 149.99,
+    image: "/product2.jpg",
+  },
+];
+
 const iconsBtns: IconButton[] = [
   { icon: Heart, showBadge: true, tooltip: "Wishlist" },
   { icon: User, showBadge: false, tooltip: "Account" },
-  { icon: ShoppingCart, showBadge: true, tooltip: "Cart" },
 ];
 
 export default function Navbar() {
@@ -110,31 +119,17 @@ export default function Navbar() {
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] p-2 top-15 translate-y-0">
+                  <DialogHeader>
+                    <h1 className="text-start">Search products</h1>
+                  </DialogHeader>
                   <div className="flex flex-row w-full border rounded-sm">
                     <div className="flex flex-row items-center gap-2 py-1 px-2">
                       <Search strokeWidth={1} />
                       <Input
                         type="text"
-                        placeholder="Search for products"
+                        placeholder="Search by title or category"
                         className="w-full shadow-none border-0 focus:ring-0 focus-visible:ring-0 p-0"
                       />
-                    </div>
-                    <div className="border-l flex flex-row items-center">
-                      <Select>
-                        <SelectTrigger className="border-0 rounded-none cursor-pointer shadow-none focus:ring-0 focus-visible:ring-0">
-                          <SelectValue placeholder="Price" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Prices</SelectLabel>
-                            {priceOPtions.map(({ value, label }) => (
-                              <SelectItem key={value} value={value}>
-                                {label}
-                              </SelectItem>
-                            ))}{" "}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
                     </div>
                   </div>
                 </DialogContent>
@@ -193,6 +188,69 @@ export default function Navbar() {
                 </Tooltip>
               </TooltipProvider>
             ))}
+            <Popover className="relative">
+              <PopoverButton
+                as={Button}
+                variant="secondary"
+                size="icon"
+                className="text-gray-700 rounded-full relative shadow-none focus:ring-0 focus-visible:ring-0 cursor-pointer"
+              >
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  0
+                </span>
+                <ShoppingCart strokeWidth={1} />
+              </PopoverButton>
+              <PopoverPanel className="absolute right-0 z-10 mt-3 w-screen max-w-xs overflow-hidden rounded-sm bg-white shadow-lg ring-1 ring-gray-900/5">
+                <div className="p-4">
+                  <div className="space-y-4">
+                    {cartItems.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-6 px-4">
+                        <ShoppingCart
+                          className="h-12 w-12 text-gray-300 mb-3"
+                          strokeWidth={1}
+                        />
+                        <p className="text-sm font-medium text-gray-900">
+                          Your cart is empty
+                        </p>
+                        <p className="text-xs text-gray-500 text-center mt-1">
+                          Add items to your cart to start shopping
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="px-4">
+                          {cartItems.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-4 py-2"
+                            >
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                width={64}
+                                height={64}
+                                className="w-16 h-16 object-cover rounded"
+                              />
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {item.name}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  ${item.price}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="border-t pt-4">
+                          <Button className="w-full">View Cart</Button>
+                        </div>
+                      </>
+                    )}
+                  </div>{" "}
+                </div>
+              </PopoverPanel>
+            </Popover>
           </div>
         </div>
       </nav>

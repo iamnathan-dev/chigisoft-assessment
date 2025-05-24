@@ -29,7 +29,7 @@ export function ReviewCarousel() {
             delay: 2000,
           }),
         ]}
-        className="w-full max-w-4xl mx-auto pb-[2rem] mt-10"
+        className="lg:max-w-4xl md:max-w-2xl max-w-[310px] mx-auto pb-[2rem] mt-10 group"
       >
         <CarouselContent>
           {MOCK_REVEIWS.map((review) => (
@@ -65,8 +65,8 @@ export function ReviewCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="left-0 group-hover:opacity-100 opacity-0" />
+        <CarouselNext className="right-0 group-hover:opacity-100 opacity-0" />
       </Carousel>
     </div>
   );
