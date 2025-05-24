@@ -40,8 +40,9 @@ src/
 ├── config/              # Application configuration
 ├── hooks/               # Custom React hooks
 ├── lib/                 # Utility functions and libraries
-├── context/           # React context api
-├── shared/           # Shared components and assets
+├── context/            # React context api
+├── shared/             # Shared components and assets
+```
 
 ## Technical Stack
 
@@ -105,4 +106,3 @@ For detailed deployment configuration, refer to the [Next.js deployment document
 <!-- ## Contributing
 
 Please read our CONTRIBUTING.md file for guidelines on code style, branch naming conventions, and the pull request process. -->
-```
