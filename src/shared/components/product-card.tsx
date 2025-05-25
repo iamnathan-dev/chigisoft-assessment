@@ -1,4 +1,5 @@
 import { Product } from "@/app/(shop)/home/actions/get-products";
+import useProductStore from "@/app/(shop)/home/store/productStore";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
@@ -9,6 +10,8 @@ const ProductCard = (product: Product) => {
   const ratingStars =
     "★".repeat(Math.floor(product.rating.rate)) +
     "☆".repeat(5 - Math.floor(product.rating.rate));
+
+  const { addToCart } = useProductStore((state) => state);
 
   return (
     <div className="relative w-full h-fit rounded-sm bg-white overflow-hidden group duration-300">
@@ -70,6 +73,7 @@ const ProductCard = (product: Product) => {
           variant="default"
           size="icon"
           className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 flex items-center justify-center gap-2 py-2 cursor-pointer"
+          onClick={() => addToCart(product)}
         >
           <ShoppingCart size={18} />
         </Button>

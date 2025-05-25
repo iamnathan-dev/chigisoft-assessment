@@ -23,11 +23,13 @@ import {
 } from "@/components/ui/dialog";
 import { useSidebar } from "@/context/sidebarContext";
 import CartContent from "./cart-content";
+import useProductStore from "@/app/(shop)/home/store/productStore";
 
 interface IconButton {
   icon: React.FC<{ strokeWidth?: number }>;
   showBadge: boolean;
   tooltip?: string;
+  badgeCount?: number;
   onClick?: () => void;
 }
 
@@ -57,6 +59,7 @@ const IconButtonComponent = ({
   showBadge,
   tooltip,
   onClick,
+  badgeCount,
 }: IconButton) => (
   <TooltipProvider>
     <Tooltip>
@@ -69,7 +72,7 @@ const IconButtonComponent = ({
         >
           {showBadge && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              0
+              {badgeCount || 0}
             </span>
           )}
           <Icon strokeWidth={1} />
@@ -88,6 +91,7 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { toggleSidebar } = useSidebar();
+  const { cartItems, wishlistItems } = useProductStore();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -160,13 +164,20 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <div className="flex items-center gap-4">
               {iconsBtns.map((item, index) => (
-                <IconButtonComponent key={index} {...item} />
+                <IconButtonComponent
+                  key={index}
+                  {...item}
+                  badgeCount={
+                    item.icon === Heart ? wishlistItems.length : undefined
+                  }
+                />
               ))}
               <IconButtonComponent
                 icon={ShoppingCart}
                 showBadge={true}
                 tooltip="Cart"
                 onClick={() => setIsCartOpen(true)}
+                badgeCount={cartItems.length}
               />
             </div>
           </div>
@@ -185,7 +196,12 @@ export default function Navbar() {
         }`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b">
-          <h2 className="font-medium">Shopping Cart</h2>
+          <div>
+            <h2 className="font-medium">Shopping Cart</h2>
+            <small className="text-xs text-gray-400">
+              Number of items in cart ({cartItems.length})
+            </small>
+          </div>
           <Button
             variant="ghost"
             size="icon"
@@ -195,7 +211,7 @@ export default function Navbar() {
             <X strokeWidth={1} />
           </Button>
         </div>
-        <div className="p-4 h-full">
+        <div className="h-full">
           <CartContent />
         </div>
       </div>

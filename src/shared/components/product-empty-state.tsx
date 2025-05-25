@@ -6,10 +6,10 @@ const EmptyState = () => (
     <div className="w-24 h-24 mb-6 rounded-full bg-gray-100 flex items-center justify-center">
       <ShoppingBag size={50} className="text-gray-400" strokeWidth={1} />
     </div>
-    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+    <h3 className="text-lg font-medium text-gray-900 mb-2">
       No products found
     </h3>
-    <p className="text-gray-500 mb-6 max-w-sm">
+    <p className="text-gray-500 text-sm mb-6 max-w-sm">
       We couldn&apos;t find any products at the moment. Please check back later
       or try refreshing the page.
     </p>
