@@ -24,6 +24,7 @@ import {
 import { useSidebar } from "@/context/sidebarContext";
 import CartContent from "./cart-content";
 import useProductStore from "@/app/(shop)/home/store/productStore";
+import WishlistContent from "./wishlist-content";
 
 interface IconButton {
   icon: React.FC<{ strokeWidth?: number }>;
@@ -90,6 +91,7 @@ const IconButtonComponent = ({
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const { toggleSidebar } = useSidebar();
   const { cartItems, wishlistItems } = useProductStore();
 
@@ -167,6 +169,11 @@ export default function Navbar() {
                 <IconButtonComponent
                   key={index}
                   {...item}
+                  onClick={
+                    item.icon === Heart
+                      ? () => setIsWishlistOpen(true)
+                      : undefined
+                  }
                   badgeCount={
                     item.icon === Heart ? wishlistItems.length : undefined
                   }
@@ -186,9 +193,14 @@ export default function Navbar() {
 
       <div
         className={`fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity z-50 ${
-          isCartOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          isCartOpen || isWishlistOpen
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => setIsCartOpen(false)}
+        onClick={() => {
+          setIsCartOpen(false);
+          setIsWishlistOpen(false);
+        }}
       />
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
@@ -213,6 +225,32 @@ export default function Navbar() {
         </div>
         <div className="h-full">
           <CartContent />
+        </div>
+      </div>
+
+      <div
+        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
+          isWishlistOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b">
+          <div>
+            <h2 className="font-medium">Wishlist</h2>
+            <small className="text-xs text-gray-400">
+              Number of items in wishlist ({wishlistItems.length})
+            </small>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsWishlistOpen(false)}
+            className="text-gray-500"
+          >
+            <X strokeWidth={1} />
+          </Button>
+        </div>
+        <div className="h-full">
+          <WishlistContent />
         </div>
       </div>
     </>
