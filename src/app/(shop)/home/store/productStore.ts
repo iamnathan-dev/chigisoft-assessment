@@ -75,15 +75,22 @@ const useProductStore = create<ProductStore>((set, get) => {
         const matchesCategory =
           !selectedCategory || product.category === selectedCategory;
 
-        const matchesPriceRange =
-          !priceRange ||
-          (product.price >= priceRange.min && product.price <= priceRange.max);
+        let matchesPriceRange = true;
+        if (priceRange) {
+          const min = priceRange.min;
+          const max = priceRange.max;
+          if (max === Infinity) {
+            matchesPriceRange = product.price >= min;
+          } else {
+            matchesPriceRange = product.price >= min && product.price <= max;
+          }
+        }
 
         return matchesSearch && matchesCategory && matchesPriceRange;
       });
-
       return filtered;
     },
+
     addToCart: (product) => {
       const { cartItems, wishlistItems } = get();
       const existingItem = cartItems.find((item) => item.id === product.id);

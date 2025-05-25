@@ -43,7 +43,7 @@ const mobileIcons: IconButton[] = [
   { icon: Search, showBadge: false, tooltip: "Search" },
   { icon: Heart, showBadge: true, tooltip: "Wishlist" },
   { icon: ShoppingCart, showBadge: true, tooltip: "Cart" },
-  { icon: User, showBadge: false, tooltip: "Account" },
+  // { icon: User, showBadge: false, tooltip: "Account" },
 ];
 
 const SearchInput = ({ className = "" }) => {
@@ -107,7 +107,7 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, isOpen } = useSidebar();
   const { cartItems, wishlistItems } = useProductStore();
 
   useEffect(() => {
@@ -143,7 +143,7 @@ export default function Navbar() {
               onClick={toggleSidebar}
             >
               <span className="sr-only">Open main menu</span>
-              <Menu strokeWidth={1} />
+              {isOpen ? <X strokeWidth={1} /> : <Menu strokeWidth={1} />}
             </Button>
             {mobileIcons.map((item, index) =>
               item.icon === Search ? (
@@ -224,7 +224,7 @@ export default function Navbar() {
       </header>
 
       <div
-        className={`fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity z-50 ${
+        className={`fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity z-[99] ${
           isCartOpen || isWishlistOpen
             ? "opacity-100"
             : "opacity-0 pointer-events-none"
@@ -235,7 +235,7 @@ export default function Navbar() {
         }}
       />
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-[99999] ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -261,7 +261,7 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-[9999] ${
           isWishlistOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

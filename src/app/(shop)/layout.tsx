@@ -8,7 +8,6 @@ import {
   SOCIAL_LINKS,
   CATEGORIES,
 } from "./constant";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Footer } from "@/shared/components/footer";
 import SocialButton from "@/shared/components/social-buttons";
 import useProductStore from "@/app/(shop)/home/store/productStore";
@@ -34,16 +33,12 @@ const FilterSection = ({
 }) => {
   const { setPriceRange, setSelectedCategory } = useProductStore();
 
-  const handleChange = (checked: boolean, value: string) => {
+  const handleChange = (value: string) => {
     if (type === "category") {
-      setSelectedCategory(checked ? value : null);
+      setSelectedCategory(value);
     } else if (type === "price") {
-      if (checked) {
-        const [min, max] = value.split("-").map(Number);
-        setPriceRange({ min, max });
-      } else {
-        setPriceRange(null);
-      }
+      const [min, max] = value.split("-").map(Number);
+      setPriceRange({ min, max });
     }
   };
 
@@ -53,12 +48,12 @@ const FilterSection = ({
       <div className="space-y-2">
         {items.map((item) => (
           <div key={item.value} className="flex items-center space-x-2">
-            <Checkbox
+            <input
+              type="radio"
               id={item.value}
-              className="data-[state=checked]:bg-red-400 data-[state=checked]:border-red-400"
-              onCheckedChange={(checked: boolean) =>
-                handleChange(checked, item.value)
-              }
+              name={type}
+              className="accent-red-400 focus:ring-red-400"
+              onChange={() => handleChange(item.value)}
             />
             <label
               htmlFor={item.value}
@@ -72,7 +67,6 @@ const FilterSection = ({
     </div>
   );
 };
-
 export default function ShopLayout({
   children,
 }: {

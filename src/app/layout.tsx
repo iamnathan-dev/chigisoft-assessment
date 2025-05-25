@@ -24,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${rubik.className} antialiased font-rubik`}>
+      <body
+        className={`${rubik.className} antialiased font-rubik overflow-x-hidden`}
+      >
         <Providers>
           <SidebarProvider>
             <Navbar />

@@ -108,14 +108,24 @@ const ProductCard = (product: Product) => {
             </Button>
           </div>
         ) : (
-          <Button
-            variant="default"
-            size="icon"
-            className="md:absolute md:bottom-3 md:right-3 md:opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 flex items-center justify-center gap-2 py-2 cursor-pointer w-full"
-            onClick={() => addToCart(product)}
-          >
-            <ShoppingCart size={18} />
-          </Button>
+          <>
+            <Button
+              variant="default"
+              size="icon"
+              className="md:absolute md:bottom-3 md:right-3 md:opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 hidden items-center justify-center gap-2 py-2 cursor-pointer lg:flex"
+              onClick={() => addToCart(product)}
+            >
+              <ShoppingCart size={18} />
+            </Button>
+            <Button
+              variant="default"
+              size="icon"
+              className="md:absolute md:bottom-3 md:right-3 md:opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 flex items-center justify-center gap-2 py-2 cursor-pointer w-full lg:hidden"
+              onClick={() => addToCart(product)}
+            >
+              <ShoppingCart size={18} />
+            </Button>
+          </>
         )}
       </div>
     </div>

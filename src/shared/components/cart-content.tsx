@@ -14,7 +14,7 @@ const CartContent = () => {
 
   const calculateSubtotal = (items: Product[]) => {
     return items
-      .reduce((acc, item) => acc + item.price * (item.quantity || 1), 0)
+      .reduce((acc, item) => acc + item.price * 1.022 * (item.quantity || 1), 0)
       .toLocaleString("en-US", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
