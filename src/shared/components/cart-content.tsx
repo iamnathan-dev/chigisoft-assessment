@@ -5,9 +5,12 @@ import Image from "next/image";
 import { Product } from "@/app/(shop)/home/actions/get-products";
 
 const CartContent = () => {
-  const { getCartItems, increaseQuantity, decreaseQuantity, removeFromCart } =
-    useProductStore((state) => state);
+  const { getCartItems, removeFromCart, updateQuantity } = useProductStore(
+    (state) => state
+  );
   const cartItems = getCartItems();
+
+  const quantity = cartItems.find((item) => item.id === item.id)?.quantity || 0;
 
   const calculateSubtotal = (items: Product[]) => {
     return items
@@ -64,7 +67,7 @@ const CartContent = () => {
             variant="outline"
             size="icon"
             className="h-6 w-6 cursor-pointer"
-            onClick={() => decreaseQuantity(item.id)}
+            onClick={() => updateQuantity(item.id, quantity - 1)}
           >
             <Minus className="h-3 w-3" />
           </Button>
@@ -73,7 +76,7 @@ const CartContent = () => {
             variant="outline"
             size="icon"
             className="h-6 w-6 cursor-pointer"
-            onClick={() => increaseQuantity(item.id)}
+            onClick={() => updateQuantity(item.id, quantity + 1)}
           >
             <Plus className="h-3 w-3" />
           </Button>

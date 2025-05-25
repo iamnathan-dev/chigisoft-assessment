@@ -11,11 +11,12 @@ interface ProductStore {
   filterProducts: (query: string) => Product[];
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
-  increaseQuantity: (productId: number) => void;
-  decreaseQuantity: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (productId: string) => void;
   getCartItems: () => (Product & { quantity: number })[];
+  isInCart: (productId: number) => boolean;
+  getQuantity: (productId: number) => number;
 }
 
 const useProductStore = create<ProductStore>((set, get) => ({
@@ -67,26 +68,19 @@ const useProductStore = create<ProductStore>((set, get) => ({
     });
   },
 
-  increaseQuantity: (productId) => {
+  updateQuantity: (productId, quantity) => {
     const { cartItems } = get();
-    set({
-      cartItems: cartItems.map((item) =>
-        item.id === Number(productId)
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ),
-    });
-  },
-
-  decreaseQuantity: (productId) => {
-    const { cartItems } = get();
-    set({
-      cartItems: cartItems.map((item) =>
-        item.id === Number(productId) && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      ),
-    });
+    if (quantity <= 0) {
+      set({
+        cartItems: cartItems.filter((item) => item.id !== productId),
+      });
+    } else {
+      set({
+        cartItems: cartItems.map((item) =>
+          item.id === productId ? { ...item, quantity: quantity } : item
+        ),
+      });
+    }
   },
 
   addToWishlist: (product) => {
@@ -106,6 +100,17 @@ const useProductStore = create<ProductStore>((set, get) => ({
   getCartItems: () => {
     const { cartItems } = get();
     return cartItems;
+  },
+
+  isInCart: (productId) => {
+    const { cartItems } = get();
+    return cartItems.some((item) => item.id === productId);
+  },
+
+  getQuantity: (productId) => {
+    const { cartItems } = get();
+    const item = cartItems.find((item) => item.id === productId);
+    return item ? item.quantity : 0;
   },
 }));
 
