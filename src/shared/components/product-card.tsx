@@ -47,7 +47,7 @@ const ProductCard = (product: Product) => {
         <h4 className="text-xs font-medium line-clamp-2 h-9">
           {product.title}
         </h4>
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex md:flex-row flex-col md:gap-2 md:items-center">
           <div className="flex items-center gap-1">
             <div className="flex items-center text-xs text-yellow-400">
               {ratingStars}
@@ -57,7 +57,7 @@ const ProductCard = (product: Product) => {
             </span>
           </div>
 
-          <span className="text-gray-400">•</span>
+          <span className="text-gray-400 md:block hidden">•</span>
 
           <div className="text-xs text-gray-400">Stock: {product.quantity}</div>
         </div>
@@ -88,7 +88,7 @@ const ProductCard = (product: Product) => {
           </Button>{" "}
         </div>
         {isProductInCart ? (
-          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
+          <div className="md:absolute md:bottom-3 md:right-3 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-end">
             <Button
               variant="outline"
               size="icon"
@@ -111,12 +111,12 @@ const ProductCard = (product: Product) => {
           <Button
             variant="default"
             size="icon"
-            className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 flex items-center justify-center gap-2 py-2 cursor-pointer"
+            className="md:absolute md:bottom-3 md:right-3 md:opacity-0 group-hover:opacity-100 bg-red-400 hover:bg-red-500 rounded-sm text-white transition-opacity duration-300 flex items-center justify-center gap-2 py-2 cursor-pointer w-full"
             onClick={() => addToCart(product)}
           >
             <ShoppingCart size={18} />
           </Button>
-        )}{" "}
+        )}
       </div>
     </div>
   );

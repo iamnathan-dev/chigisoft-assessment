@@ -41,6 +41,8 @@ const iconsBtns: IconButton[] = [
 
 const mobileIcons: IconButton[] = [
   { icon: Search, showBadge: false, tooltip: "Search" },
+  { icon: Heart, showBadge: true, tooltip: "Wishlist" },
+  { icon: ShoppingCart, showBadge: true, tooltip: "Cart" },
   { icon: User, showBadge: false, tooltip: "Account" },
 ];
 
@@ -128,7 +130,7 @@ export default function Navbar() {
               <Image
                 alt="cartzilla logo"
                 src={isMobile ? LogoMobile : Logo}
-                className="h-8 w-auto"
+                className={`${isMobile ? "h-6" : "h-8"} w-auto`}
               />
             </Link>
           </div>
@@ -165,7 +167,24 @@ export default function Navbar() {
                   </DialogContent>
                 </Dialog>
               ) : (
-                <IconButtonComponent key={index} {...item} />
+                <IconButtonComponent
+                  key={index}
+                  {...item}
+                  onClick={
+                    item.icon === Heart
+                      ? () => setIsWishlistOpen(true)
+                      : item.icon === ShoppingCart
+                      ? () => setIsCartOpen(true)
+                      : undefined
+                  }
+                  badgeCount={
+                    item.icon === Heart
+                      ? wishlistItems.length
+                      : item.icon === ShoppingCart
+                      ? cartItems.length
+                      : undefined
+                  }
+                />
               )
             )}
           </div>
