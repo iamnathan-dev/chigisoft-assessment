@@ -7,9 +7,13 @@ interface ProductStore {
   cartItems: (Product & { quantity: number })[];
   wishlistItems: Product[];
   query: string;
+  priceRange: { min: number; max: number } | null;
+  selectedCategory: string | null;
   setProducts: (products: Product[]) => void;
   setSelectedProduct: (product: Product | null) => void;
   setQuery: (query: string) => void;
+  setPriceRange: (range: { min: number; max: number } | null) => void;
+  setSelectedCategory: (category: string | null) => void;
   filterProducts: () => Product[];
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
@@ -19,6 +23,7 @@ interface ProductStore {
   getCartItems: () => (Product & { quantity: number })[];
   getWishlistItems: () => Product[];
   isInCart: (productId: number) => boolean;
+  inWishlist: (productId: number) => boolean;
   getQuantity: (productId: number) => number;
 }
 
@@ -36,6 +41,8 @@ const useProductStore = create<ProductStore>((set, get) => {
     cartItems: getLocalStorage("cartItems"),
     wishlistItems: getLocalStorage("wishlistItems"),
     query: "",
+    priceRange: null,
+    selectedCategory: null,
 
     setProducts: (products) => {
       set({ products });
@@ -49,22 +56,36 @@ const useProductStore = create<ProductStore>((set, get) => {
       set({ query });
     },
 
+    setPriceRange: (range) => {
+      set({ priceRange: range });
+    },
+
+    setSelectedCategory: (category) => {
+      set({ selectedCategory: category });
+    },
+
     filterProducts: () => {
-      const { products, query } = get();
+      const { products, query, priceRange, selectedCategory } = get();
 
-      const filtered = products.filter(
-        (product) =>
+      const filtered = products.filter((product) => {
+        const matchesSearch =
           product.title.toLowerCase().includes((query || "").toLowerCase()) ||
-          product.category.toLowerCase().includes((query || "").toLowerCase())
-      );
+          product.category.toLowerCase().includes((query || "").toLowerCase());
 
-      console.log(filtered);
+        const matchesCategory =
+          !selectedCategory || product.category === selectedCategory;
+
+        const matchesPriceRange =
+          !priceRange ||
+          (product.price >= priceRange.min && product.price <= priceRange.max);
+
+        return matchesSearch && matchesCategory && matchesPriceRange;
+      });
 
       return filtered;
     },
-
     addToCart: (product) => {
-      const { cartItems } = get();
+      const { cartItems, wishlistItems } = get();
       const existingItem = cartItems.find((item) => item.id === product.id);
 
       let updatedCartItems;
@@ -80,7 +101,21 @@ const useProductStore = create<ProductStore>((set, get) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       }
-      set({ cartItems: updatedCartItems });
+
+      const updatedWishlistItems = wishlistItems.filter(
+        (item) => item.id !== product.id
+      );
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "wishlistItems",
+          JSON.stringify(updatedWishlistItems)
+        );
+      }
+
+      set({
+        cartItems: updatedCartItems,
+        wishlistItems: updatedWishlistItems,
+      });
     },
 
     removeFromCart: (productId) => {
@@ -152,6 +187,11 @@ const useProductStore = create<ProductStore>((set, get) => {
     isInCart: (productId) => {
       const { cartItems } = get();
       return cartItems.some((item) => item.id === productId);
+    },
+
+    inWishlist: (productId) => {
+      const { wishlistItems } = get();
+      return wishlistItems.some((item) => item.id === productId);
     },
 
     getQuantity: (productId) => {

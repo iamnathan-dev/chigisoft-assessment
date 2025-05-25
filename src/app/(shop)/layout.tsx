@@ -1,3 +1,5 @@
+"use client";
+
 import Sidebar from "@/shared/components/sidebar";
 import {
   CONTACT_INFO,
@@ -9,6 +11,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Footer } from "@/shared/components/footer";
 import SocialButton from "@/shared/components/social-buttons";
+import useProductStore from "@/app/(shop)/home/store/productStore";
 
 const ContactItem = ({ Icon, label, value }: ContactInfo) => (
   <div className="flex flex-row gap-3 items-center">
@@ -23,30 +26,52 @@ const ContactItem = ({ Icon, label, value }: ContactInfo) => (
 const FilterSection = ({
   title,
   items,
+  type,
 }: {
   title: string;
   items: { label: string; value: string }[];
-}) => (
-  <div className="mb-10">
-    <h3 className="text-base text-gray-700 mb-4">{title}</h3>
-    <div className="space-y-2">
-      {items.map((item) => (
-        <div key={item.value} className="flex items-center space-x-2">
-          <Checkbox
-            id={item.value}
-            className="data-[state=checked]:bg-red-400 data-[state=checked]:border-red-400"
-          />
-          <label
-            htmlFor={item.value}
-            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-600"
-          >
-            {item.label}
-          </label>
-        </div>
-      ))}
+  type: "category" | "price";
+}) => {
+  const { setPriceRange, setSelectedCategory } = useProductStore();
+
+  const handleChange = (checked: boolean, value: string) => {
+    if (type === "category") {
+      setSelectedCategory(checked ? value : null);
+    } else if (type === "price") {
+      if (checked) {
+        const [min, max] = value.split("-").map(Number);
+        setPriceRange({ min, max });
+      } else {
+        setPriceRange(null);
+      }
+    }
+  };
+
+  return (
+    <div className="mb-10">
+      <h3 className="text-base text-gray-700 mb-4">{title}</h3>
+      <div className="space-y-2">
+        {items.map((item) => (
+          <div key={item.value} className="flex items-center space-x-2">
+            <Checkbox
+              id={item.value}
+              className="data-[state=checked]:bg-red-400 data-[state=checked]:border-red-400"
+              onCheckedChange={(checked: boolean) =>
+                handleChange(checked, item.value)
+              }
+            />
+            <label
+              htmlFor={item.value}
+              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-600"
+            >
+              {item.label}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function ShopLayout({
   children,
@@ -57,8 +82,16 @@ export default function ShopLayout({
     <div className="flex min-h-screen">
       <Sidebar>
         <div className="p-4 h-[calc(100vh-4rem)] overflow-y-auto pb-[50px]">
-          <FilterSection title="Filter by category" items={CATEGORIES} />
-          <FilterSection title="Filter by price range" items={PRICE_RANGES} />
+          <FilterSection
+            title="Filter by category"
+            items={CATEGORIES}
+            type="category"
+          />
+          <FilterSection
+            title="Filter by price range"
+            items={PRICE_RANGES}
+            type="price"
+          />
 
           <div className="mb-10 flex flex-col gap-5">
             {CONTACT_INFO.map((info) => (

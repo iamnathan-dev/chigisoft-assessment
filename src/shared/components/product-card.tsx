@@ -11,9 +11,17 @@ const ProductCard = (product: Product) => {
     "★".repeat(Math.floor(product.rating.rate)) +
     "☆".repeat(5 - Math.floor(product.rating.rate));
 
-  const { addToCart, isInCart, updateQuantity, cartItems, addToWishlist } =
-    useProductStore((state) => state);
+  const {
+    addToCart,
+    isInCart,
+    updateQuantity,
+    inWishlist,
+    cartItems,
+    addToWishlist,
+    removeFromWishlist,
+  } = useProductStore((state) => state);
   const isProductInCart = isInCart(product.id);
+  const inWishlistArray = inWishlist(product.id);
   const quantity =
     cartItems.find((item) => item.id === product.id)?.quantity || 0;
 
@@ -65,11 +73,19 @@ const ProductCard = (product: Product) => {
           <Button
             variant="default"
             size="icon"
-            className="absolute top-3 right-3 p-2 rounded-full !bg-gray-100 cursor-pointer text-gray-400 hover:text-red-400 transition-colors"
-            onClick={() => addToWishlist(product)}
+            className={`absolute top-3 right-3 p-2 rounded-full cursor-pointer ${
+              inWishlistArray
+                ? "!bg-red-400 text-white"
+                : "text-gray-400 bg-gray-100 hover:bg-gray-100 hover:text-red-400"
+            } transition-colors`}
+            onClick={() =>
+              inWishlistArray
+                ? removeFromWishlist(product.id)
+                : addToWishlist(product)
+            }
           >
             <Heart size={20} />
-          </Button>
+          </Button>{" "}
         </div>
         {isProductInCart ? (
           <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
