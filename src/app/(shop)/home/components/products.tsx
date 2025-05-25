@@ -5,14 +5,24 @@ import { useGetProducts } from "../hooks/useGetProducts";
 import ProductCard from "@/shared/components/product-card";
 import SkeletonCard from "@/shared/components/product-skeleton";
 import EmptyState from "@/shared/components/product-empty-state";
+import useProductStore from "../store/productStore";
+import { useEffect } from "react";
 
 const SKELETON_COUNT = 8;
 const SKELETON_ITEMS = Array.from({ length: SKELETON_COUNT }, (_, i) => i + 1);
 
 const Products = () => {
+  const { setProducts, filterProducts } = useProductStore();
   const { data: products, isLoading } = useGetProducts();
 
-  const isEmpty = !isLoading && (!products || products.length === 0);
+  useEffect(() => {
+    setProducts(products || []);
+  }, [products, setProducts]);
+
+  const filteredProducts = filterProducts();
+
+  const isEmpty =
+    !isLoading && (!filteredProducts || filteredProducts.length === 0);
 
   return (
     <section className="mx-auto pt-[5rem] pb-[3rem]">
@@ -33,7 +43,7 @@ const Products = () => {
         ) : isEmpty ? (
           <EmptyState />
         ) : (
-          products?.map((product) => (
+          filteredProducts?.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))
         )}
@@ -41,5 +51,4 @@ const Products = () => {
     </section>
   );
 };
-
 export default Products;

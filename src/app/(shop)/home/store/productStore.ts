@@ -6,9 +6,11 @@ interface ProductStore {
   selectedProduct: Product | null;
   cartItems: (Product & { quantity: number })[];
   wishlistItems: Product[];
+  query: string;
   setProducts: (products: Product[]) => void;
   setSelectedProduct: (product: Product | null) => void;
-  filterProducts: (query: string) => Product[];
+  setQuery: (query: string) => void;
+  filterProducts: () => Product[];
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
@@ -33,6 +35,7 @@ const useProductStore = create<ProductStore>((set, get) => {
     selectedProduct: null,
     cartItems: getLocalStorage("cartItems"),
     wishlistItems: getLocalStorage("wishlistItems"),
+    query: "",
 
     setProducts: (products) => {
       set({ products });
@@ -42,15 +45,22 @@ const useProductStore = create<ProductStore>((set, get) => {
       set({ selectedProduct: product });
     },
 
-    filterProducts: (query) => {
-      const { products } = get();
-      if (!query) return products;
+    setQuery: (query) => {
+      set({ query });
+    },
 
-      return products.filter(
+    filterProducts: () => {
+      const { products, query } = get();
+
+      const filtered = products.filter(
         (product) =>
-          product.title.toLowerCase().includes(query.toLowerCase()) ||
-          product.description.toLowerCase().includes(query.toLowerCase())
+          product.title.toLowerCase().includes((query || "").toLowerCase()) ||
+          product.category.toLowerCase().includes((query || "").toLowerCase())
       );
+
+      console.log(filtered);
+
+      return filtered;
     },
 
     addToCart: (product) => {
@@ -151,5 +161,4 @@ const useProductStore = create<ProductStore>((set, get) => {
     },
   };
 });
-
 export default useProductStore;

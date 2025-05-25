@@ -44,16 +44,29 @@ const mobileIcons: IconButton[] = [
   { icon: User, showBadge: false, tooltip: "Account" },
 ];
 
-const SearchInput = ({ className = "" }) => (
-  <div className="flex flex-row items-center gap-2 py-1 px-2">
-    <Search strokeWidth={1} />
-    <Input
-      type="text"
-      placeholder="Search by title or category..."
-      className={`shadow-none border-0 focus:ring-0 focus-visible:ring-0 p-0 ${className}`}
-    />
-  </div>
-);
+const SearchInput = ({ className = "" }) => {
+  const setQuery = useProductStore((state) => state.setQuery);
+  const [seachQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    setQuery(query);
+  };
+
+  return (
+    <div className="flex flex-row items-center gap-2 py-1 px-2">
+      <Search strokeWidth={1} />
+      <Input
+        type="text"
+        placeholder="Search by title or category..."
+        className={`shadow-none border-0 focus:ring-0 focus-visible:ring-0 p-0 ${className}`}
+        value={seachQuery}
+        onChange={handleSearch}
+      />
+    </div>
+  );
+};
 
 const IconButtonComponent = ({
   icon: Icon,
