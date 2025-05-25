@@ -65,8 +65,8 @@ export function ReviewCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-0 group-hover:opacity-100 opacity-0" />
-        <CarouselNext className="right-0 group-hover:opacity-100 opacity-0" />
+        <CarouselPrevious className="left-0 group-hover:opacity-100 lg:opacity-0" />
+        <CarouselNext className="right-0 group-hover:opacity-100 lg:opacity-0" />
       </Carousel>
     </div>
   );
