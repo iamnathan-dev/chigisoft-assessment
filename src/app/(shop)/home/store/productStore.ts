@@ -67,6 +67,13 @@ const useProductStore = create<ProductStore>((set, get) => {
     filterProducts: () => {
       const { products, query, priceRange, selectedCategory } = get();
 
+      if (
+        selectedCategory === "" ||
+        (priceRange && priceRange.min === 0 && priceRange.max === 0)
+      ) {
+        return products;
+      }
+
       const filtered = products.filter((product) => {
         const matchesSearch =
           product.title.toLowerCase().includes((query || "").toLowerCase()) ||

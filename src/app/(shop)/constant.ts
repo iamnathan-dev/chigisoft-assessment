@@ -173,5 +173,5 @@ export const PRICE_RANGES = [
   { label: "Under $50", value: "0-50" },
   { label: "$50 - $100", value: "50-100" },
   { label: "$100 - $200", value: "100-200" },
-  { label: "Over $200", value: "200+" },
+  { label: "Over $200", value: "200-2000" },
 ];

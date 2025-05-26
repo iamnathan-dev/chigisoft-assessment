@@ -42,9 +42,25 @@ const FilterSection = ({
     }
   };
 
+  const handleClear = () => {
+    const clearActions = {
+      category: () => setSelectedCategory(""),
+      price: () => setPriceRange({ min: 0, max: 0 }),
+    };
+    clearActions[type]();
+  };
+
   return (
     <div className="mb-10">
-      <h3 className="text-base text-gray-700 mb-4">{title}</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-base text-gray-700">{title}</h3>
+        <button
+          onClick={handleClear}
+          className="text-xs text-red-400 hover:text-red-500"
+        >
+          Clear
+        </button>
+      </div>
       <div className="space-y-2">
         {items.map((item) => (
           <div key={item.value} className="flex items-center space-x-2">
@@ -57,7 +73,7 @@ const FilterSection = ({
             />
             <label
               htmlFor={item.value}
-              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-600"
+              className="text-sm leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-600"
             >
               {item.label}
             </label>
@@ -67,6 +83,7 @@ const FilterSection = ({
     </div>
   );
 };
+
 export default function ShopLayout({
   children,
 }: {
