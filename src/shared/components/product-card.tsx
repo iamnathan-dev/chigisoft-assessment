@@ -6,7 +6,10 @@ import Image from "next/image";
 
 const ProductCard = (product: Product) => {
   const originalPrice = product.price.toLocaleString();
-  const increasedPrice = (product.price * 1.022).toLocaleString();
+  const increasedPrice = (product.price * 1.022).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
   const ratingStars =
     "★".repeat(Math.floor(product.rating.rate)) +
     "☆".repeat(5 - Math.floor(product.rating.rate));

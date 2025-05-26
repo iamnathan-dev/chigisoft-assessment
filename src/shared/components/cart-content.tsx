@@ -56,7 +56,11 @@ const CartContent = () => {
         </div>
         <div className="flex items-center gap-2">
           <div className="text-base font-light text-indigo-600">
-            ${(item.price * 1.022).toLocaleString()}
+            $
+            {(item.price * 1.022).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </div>
           <small className="text-gray-400 line-through">
             ${item.price.toLocaleString()}
